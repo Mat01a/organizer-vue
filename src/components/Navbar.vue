@@ -43,7 +43,7 @@
 
 <script setup>
 import IconOrganizer from './icons/IconOrganizer.vue'
-import IconMoon from './icons/IconMoon.vue'
+import IconMoon from './icons/IconThemeToggle.vue'
 import { ref } from 'vue'
 
 const loggedIn = ref(true)
