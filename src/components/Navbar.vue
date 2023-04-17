@@ -44,7 +44,9 @@
 <script setup>
 import IconOrganizer from './icons/IconOrganizer.vue'
 import IconMoon from './icons/IconThemeToggle.vue'
+import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 
-const loggedIn = ref(true)
+const user = useUserStore()
+const loggedIn = user.isLoggedIn
 </script>

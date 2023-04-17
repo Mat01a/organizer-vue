@@ -10,5 +10,11 @@ export const useUserStore = defineStore('user', {
         changeDarkMode() {
 
         }
+    },
+    getters: {
+        isLoggedIn()
+        {
+            return (this.email ? true : false)
+        }
     }
 })
