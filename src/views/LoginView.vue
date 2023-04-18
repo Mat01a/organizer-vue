@@ -3,10 +3,10 @@
         <div class="absolute inset-0 mx-auto my-auto w-min h-min">
 
         </div>
-        <div class="inset-0 mx-auto my-auto absolute w-full max-w-sm h-min">
+        <div class="inset-0 mx-auto my-auto absolute w-full max-w-md h-min">
             <!-- Logo -->
             <IconOrganizer classes="w-24 h-24 mx-auto pb-8 drop-shadow-xl"/>
-            <div class="w-full h-full dark:bg-slate-500 rounded-2xl roboto md:text-2xl dark:text-slate-200 p-12 drop-shadow-xl">
+            <div class="w-full h-full dark:bg-slate-500 rounded-2xl lato md:text-2xl dark:text-slate-200 p-12 drop-shadow-xl">
 
                 <form @submit.prevent="onSubmit">
                     <div class="w-10/12 mx-auto">
