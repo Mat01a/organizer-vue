@@ -73,11 +73,6 @@ const form = ref({
     password_confirmation: null,
 })
 
-const errors = ref({
-    type: Object,
-    default: () => ({})
-})
-
 
 async function onSubmit()
 {

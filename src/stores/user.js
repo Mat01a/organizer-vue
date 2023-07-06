@@ -49,7 +49,19 @@ export const useUserStore = defineStore('user', {
                 }
             })
             .catch((error) => {
-                this.message_error = error.response.data.errors
+
+
+                //Reset all errors
+                for(let item in this.register_message_error)
+                {
+                    this.register_message_error[item] = null
+                }
+
+                //Set all current errors
+                for(let item in error.response.data.errors)
+                {
+                    this.register_message_error[item] = error.response.data.errors[item]
+                }
             })
         }
     },
