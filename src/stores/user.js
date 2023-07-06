@@ -5,8 +5,14 @@ import router from '../router'
 export const useUserStore = defineStore('user', {
     state: () => {
         return {
-            darkMode: true,
-            user: null
+            dark_mode: true,
+            user: null,
+            message_error: {
+                name: null,
+                email: null,
+                password: null,
+                password_confirmation: null
+            },
         }
     },
     actions: {
@@ -25,9 +31,26 @@ export const useUserStore = defineStore('user', {
                 }
             })
             .catch((error) => {
-                console.log(error)
+                this.message_error = error.response.data.errors
             })
 
+        },
+        async register(form) {
+            await instance.get('/sanctum/csrf-cookie')
+            const register = await instance.post('/register', {
+                name: form.value.name,
+                email: form.value.email,
+                password: form.value.password,
+                password_confirmation: form.value.password_confirmation
+            })
+            .then((response) => {
+                this.user = {
+                    email: form.value.email
+                }
+            })
+            .catch((error) => {
+                this.message_error = error.response.data.errors
+            })
         }
     },
     getters: {
