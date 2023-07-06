@@ -53,6 +53,5 @@ const form = ref({
 async function onSubmit()
 {
     await user.login(form)
-    router.push('/projects')
 }
 </script>
