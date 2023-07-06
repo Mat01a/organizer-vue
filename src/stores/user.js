@@ -32,6 +32,7 @@ export const useUserStore = defineStore('user', {
                 this.user = {
                     email: form.value.email
                 }
+                router.push({name: 'projects'})
             })
             .catch((error) => {
                 this.login_message_error = error.response.data.errors
@@ -50,6 +51,7 @@ export const useUserStore = defineStore('user', {
                 this.user = {
                     email: form.value.email
                 }
+                router.push({name: 'projects'})
             })
             .catch((error) => {
                 this.register_message_error = error.response.data.errors
