@@ -65,7 +65,7 @@ router.beforeEach((to, from) => {
   if (from.name == 'login' || from.name == 'register')
   {
     user.login_message_error.email = null
-    user.register_message_error.value = {
+    user.register_message_error = {
         email: null,
         name: null,
         password: null,
