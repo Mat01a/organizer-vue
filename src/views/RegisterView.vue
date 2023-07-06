@@ -77,5 +77,6 @@ const form = ref({
 async function onSubmit()
 {
     let register = await user.register(form)
+    errors.value = user.message_error
 }
 </script>
