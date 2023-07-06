@@ -51,6 +51,5 @@ const loggedIn = ref(false)
 onMounted(() => {
     const user = useUserStore()
     loggedIn.value = user.isLoggedIn
-    console.log(loggedIn)
 })
 </script>
