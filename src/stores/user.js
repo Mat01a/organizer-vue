@@ -7,12 +7,15 @@ export const useUserStore = defineStore('user', {
         return {
             dark_mode: true,
             user: null,
-            message_error: {
+            register_message_error: {
                 name: null,
                 email: null,
                 password: null,
                 password_confirmation: null
             },
+            login_message_error: {
+                email: null,
+            }
         }
     },
     actions: {
@@ -31,7 +34,7 @@ export const useUserStore = defineStore('user', {
                 }
             })
             .catch((error) => {
-                this.message_error = error.response.data.errors
+                this.login_message_error = error.response.data.errors
             })
 
         },
@@ -49,7 +52,7 @@ export const useUserStore = defineStore('user', {
                 }
             })
             .catch((error) => {
-                this.message_error = error.response.data.errors
+                this.register_message_error = error.response.data.errors
             })
         }
     },
