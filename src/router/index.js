@@ -60,6 +60,8 @@ router.beforeEach((to, from) => {
     }
   }
 
+
+  // If user redirect from login/register page it resets error messages
   if (from.name == 'login' || from.name == 'register')
   {
     user.login_message_error.email = null
