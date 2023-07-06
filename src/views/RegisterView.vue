@@ -73,18 +73,10 @@ const form = ref({
     password_confirmation: null,
 })
 
-const errors = ref({
-    type: Object,
-    default: () => ({})
-})
-
-console.log(user.message_error)
 
 async function onSubmit()
 {
     let register = await user.register(form)
     errors.value = user.message_error
-    console.log(user.message_error.email)
-    //router.push('/login')
 }
 </script>
