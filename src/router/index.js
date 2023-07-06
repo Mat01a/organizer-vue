@@ -52,6 +52,27 @@ router.beforeEach((to, from) => {
     }
   }
 
+  // Redirect if logged in user wants to go on login/register page
+  if (to.name == 'login' && user.isLoggedIn|| to.name == 'register' && user.isLoggedIn)
+  {
+    return {
+      path: '/'
+    }
+  }
+
+
+  // If user redirect from login/register page it resets error messages
+  if (from.name == 'login' || from.name == 'register')
+  {
+    user.login_message_error.email = null
+    user.register_message_error = {
+        email: null,
+        name: null,
+        password: null,
+        password_confirmation: null
+    }
+  }
+
 })
 
 

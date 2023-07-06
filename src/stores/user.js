@@ -7,12 +7,15 @@ export const useUserStore = defineStore('user', {
         return {
             dark_mode: true,
             user: null,
-            message_error: {
+            register_message_error: {
                 name: null,
                 email: null,
                 password: null,
                 password_confirmation: null
             },
+            login_message_error: {
+                email: null,
+            }
         }
     },
     actions: {
@@ -29,9 +32,10 @@ export const useUserStore = defineStore('user', {
                 this.user = {
                     email: form.value.email
                 }
+                router.push({name: 'projects'})
             })
             .catch((error) => {
-                this.message_error = error.response.data.errors
+                this.login_message_error = error.response.data.errors
             })
 
         },
@@ -47,6 +51,7 @@ export const useUserStore = defineStore('user', {
                 this.user = {
                     email: form.value.email
                 }
+                router.push({name: 'projects'})
             })
             .catch((error) => {
 
@@ -62,6 +67,7 @@ export const useUserStore = defineStore('user', {
                 {
                     this.register_message_error[item] = error.response.data.errors[item]
                 }
+                this.register_message_error = error.response.data.errors
             })
         }
     },

@@ -13,12 +13,15 @@
                         <label for="email" class="block">
                             E-mail
                         </label>
-                        <input type="email" id="email" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.email" required/>
+                        <input type="email" id="email" :class="{'outline outline-1 outline-red-500': user.login_message_error.email}" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.email" required/>
+                        <label v-if="user.login_message_error.email" for="email" class="block text-base text-red-500">
+                            {{ user.login_message_error.email[0] }}
+                        </label>
                         
                         <label for="password" class="block">
                             Password
                         </label>
-                        <input type="password" id="password" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.password" required/>
+                        <input type="password" id="password" :class="{'outline outline-1 outline-red-500': user.login_message_error.email}" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.password" required/>
                     </div>
                     
                     <div class="grid grid-cols-2 w-10/12 mx-auto gap-4">
@@ -50,6 +53,5 @@ const form = ref({
 async function onSubmit()
 {
     await user.login(form)
-    router.push('/projects')
 }
 </script>
