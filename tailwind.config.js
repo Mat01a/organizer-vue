@@ -9,7 +9,13 @@ module.exports = {
     extend: {
       spacing: {
         '1/16': '16.66667vh'
-      }
+      },
+      colors: {
+        'custom-slate': {
+          450: '#677C99'
+        }
+      },
+
     },
   },
   plugins: [],
