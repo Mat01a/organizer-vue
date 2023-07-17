@@ -13,10 +13,10 @@
                 <!-- Created projects -->
                 <p v-if="projects.current > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Current projects</p>
                 
-                <ProjectTab name="Lorem"/>
-                <ProjectTab name="Ipsum"/>
-                <ProjectTab name="Dolor"/>
-                <ProjectTab name="Sit"/>
+                <div v-for="element in projectStore.projects.current">
+                    <ProjectTab :name="element.name"/>
+                </div>
+
                 
                 <!-- Completed projects -->
                 <p v-if="projects.completed > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Completed projects</p>
@@ -50,8 +50,10 @@ const projectStore = useProjectStore()
 
 onMounted(() => {
     getUser()
-    projects.value.current = projectStore.countCurrentProjects
-    projects.value.completed = projectStore.countCompletedProjects
+    projectStore.getProjects().then(() => {
+        projects.value.current = projectStore.countCurrentProjects
+        projects.value.completed = projectStore.countCompletedProjects
+    })
 })
 
 
