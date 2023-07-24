@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full min:h-screen bg-slate-500">
+    <div class="flex flex-col w-full min-h-screen bg-slate-500">
         <Navbar/>
             <main class="flex-1 max-w-5xl w-full mx-auto">
                 <div class="w-full max-w-4xl mx-auto h-20 rounded-lg mt-4 drop-shadow-md" style="background-color: #7D91AD;">
