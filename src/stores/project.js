@@ -37,6 +37,13 @@ export const useProjectStore = defineStore('project', {
             .catch(error => {
                 this.message_errors = error.response.data.errors.name
             })
+        },
+        async changeProjectName(id, name)
+        {
+            await instance.patch('/api/projects', {
+                'id': id,
+                'name': name
+            })
         }
 
     },

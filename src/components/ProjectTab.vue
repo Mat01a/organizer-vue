@@ -11,20 +11,28 @@
             <div class="block col-start-3 col-span-7 text-left text-lg my-auto poppins text-slate-100">{{ name }}</div>
 
             <!-- Buttons -->
-            <SettingsButton :hovered="isHovered"/>
+            <SettingsButton :hovered="isHovered" @click="toggleEdit(true)"/>
 
         </div>
     </div>
+
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import SettingsButton from './buttons/SettingsButton.vue';
 
+
+const edit = ref(false)
 var isHovered = ref(false)
 defineProps({
     name: String
 })
 
-
+const emit = defineEmits(['toggle-Edit'])
+function toggleEdit(mode)
+{
+    emit('toggle-Edit')
+    edit.value = mode
+}
 </script>
