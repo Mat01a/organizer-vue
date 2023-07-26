@@ -24,7 +24,7 @@
     </div>
     
     <!-- EDIT -->
-    <div id="custom" :class="{'h-0': !editValue}" class="absolute z-20 overflow-hidden bg-black bg-opacity-30 left-0 right-0 top-0 h-screen w-full">
+    <div v-if="editValue" id="custom" class="absolute z-20 overflow-hidden bg-black bg-opacity-30 left-0 right-0 top-0 h-screen w-full">
         <div class="h-screen w-full">
             <div class="absolute inset-0 mx-auto my-auto w-full max-w-screen-md h-min bg-slate-400 p-4 rounded-md">
                 <div class="grid grid-cols-12 gap-4">
@@ -64,7 +64,7 @@ import Navbar from '../components/Navbar.vue';
 import ProjectTab from '../components/ProjectTab.vue';
 import CreateProject from '../components/CreateProject.vue';
 import instance from '../axios'
-import { onMounted, ref } from 'vue';
+import { onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
 import { useUserStore } from '../stores/user';
 import { useProjectStore } from '../stores/project';
 
@@ -99,6 +99,14 @@ onMounted(() => {
     })
 })
 
+onUpdated(() => {
+    setTransform()
+})
+
+onBeforeUpdate(() => {
+    setTransform()
+})
+
 function receiveEmit(project)
 {
     if(project != null)
@@ -108,8 +116,6 @@ function receiveEmit(project)
         projectSettings.value.id = currentProjectJSON.id
     }
     editValue.value = !editValue.value
-    document.querySelector("#custom").style.transform = "translateY("+window.scrollY+"px)"
-    document.body.classList.toggle("stopScrollbar")
 }
 
 
@@ -117,6 +123,16 @@ function changeProjectName()
 {
     editName.value = !editName.value
     projectStore.changeProjectName(projectSettings.value.id, projectSettings.value.name)
+}
+
+function setTransform()
+{
+    if (document.querySelector("#custom") != null)
+    {
+        document.querySelector("#custom").style.transform = "translateY("+window.scrollY+"px)"
+        document.body.classList.toggle("stopScrollbar")
+
+    }
 }
 </script>
 
