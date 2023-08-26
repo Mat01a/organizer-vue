@@ -30,6 +30,23 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: {
+        async beforeRouteEnter()
+        {
+          const user = useUserStore()
+          await user.logout()
+          .then()
+          {
+            return {
+              path: '/'
+            }
+          }
+        }
+      }
     }
   ]
 })

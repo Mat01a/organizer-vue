@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import instance from '../axios'
 import router from '../router'
+import { useProjectStore } from './project'
 
 export const useUserStore = defineStore('user', {
     state: () => {
@@ -69,6 +70,19 @@ export const useUserStore = defineStore('user', {
                 }
                 this.register_message_error = error.response.data.errors
             })
+        },
+        async logout()
+        {
+            const req = await instance.post("/logout")
+            .then(() => {
+                const projects = useProjectStore()
+                console.log("LOGOUT")
+                this.user = null
+                projects.projects.current = []
+                projects.projects.completed = []
+                sessionStorage.clear()
+            })
+            return req
         }
     },
     getters: {
