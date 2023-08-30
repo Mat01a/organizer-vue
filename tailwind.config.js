@@ -12,7 +12,8 @@ module.exports = {
       },
       colors: {
         'custom-slate': {
-          450: '#677C99'
+          450: '#677C99',
+          350: '#b6bcc5',
         }
       },
 
