@@ -38,14 +38,27 @@ export const useProjectStore = defineStore('project', {
                 this.message_errors = error.response.data.errors.name
             })
         },
-        async changeProjectName(id, name)
+        async changeName(id, name)
         {
             await instance.patch('/api/projects', {
                 'id': id,
                 'name': name
-            })
-        }
+            }).then((response) => {
+                if (response.status == 200)
+                {
 
+                    // Update list
+                    this.projects.current.forEach((element, index) => {
+                        if(element.id === id)
+                        {
+                            this.projects.current[id - 1].name = name
+                        }
+                    })
+
+                    return true
+                }
+            })
+        },
     },
     getters: {
         countCurrentProjects() {
