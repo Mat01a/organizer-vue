@@ -45,6 +45,7 @@ export const useUserStore = defineStore('user', {
             const register = await instance.post('/register', {
                 name: form.value.name,
                 email: form.value.email,
+                username: form.value.username,
                 password: form.value.password,
                 password_confirmation: form.value.password_confirmation
             })

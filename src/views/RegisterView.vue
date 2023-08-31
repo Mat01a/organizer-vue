@@ -13,14 +13,15 @@
                         <label for="name" class="block">
                             Name
                         </label>
-                        <input type="name" id="name" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.name" required/>
+                        <input type="name" id="name" class="text-xl md:mt-2 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.name" required/>
 
-
+                        
                         <label for="email" class="block">
                             E-mail
                         </label>
-                        <input type="email" id="email" v-bind:class="{'outline outline-1 outline-red-500': user.register_message_error.email}" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.email" required/>
-                        <div v-if="user.register_message_error !== null">
+                        <input type="email" id="email" v-bind:class="{'outline outline-1 outline-red-500': user.register_message_error.email}" class="text-xl md:mt-2 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.email" required/>
+
+                        <div v-if="user.register_message_error != null">
                             <div class="block" v-for="(item, index) in user.register_message_error.email">
                                 <ul class="text-red-500 text-lg m-1">
                                 {{ item }}
@@ -28,12 +29,23 @@
                             </div>
                         </div>
 
+                        <label for="username" class="block">
+                            Username
+                        </label>
+
+                        <input type="text" id="username" class="text-xl md:mt-2 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.username" required/>
+
+
+
                         
                         <label for="password" class="block">
                             Password
                         </label>
-                        <input type="password" id="password" :class="{ 'outline outline-1 outline-red-500': user.register_message_error.password !== null}" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.password" required/>
-                        <div v-if="user.register_message_error !== null">
+
+
+                        <input type="password" id="password" :class="{ 'outline outline-1 outline-red-500': user.register_message_error.password != null}" class="text-xl md:mt-2 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.password" required/>
+
+                        <div v-if="user.register_message_error.password != null">
                             <div class="block" v-for="(item, index) in user.register_message_error.password">
                                 <ul for="password" class="text-red-500 text-lg m-1">
                                 {{ item }}
@@ -44,7 +56,7 @@
                         <label for="password" class="block">
                             Password confirmation
                         </label>
-                        <input type="password" id="password" class="text-xl md:mt-4 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.password_confirmation" required/>
+                        <input type="password" id="password" class="text-xl md:mt-2 rounded-md w-full bg-slate-500 mb-8 md:p-2 dark:focus:outline-none drop-shadow-xl" v-model="form.password_confirmation" required/>
                     </div>
                     
                     <div class="grid grid-cols-1 w-6/12 mx-auto gap-4">
@@ -69,6 +81,7 @@ const user = useUserStore()
 const form = ref({
     name: null,
     email: null,
+    username: null,
     password: null,
     password_confirmation: null,
 })
@@ -77,6 +90,5 @@ const form = ref({
 async function onSubmit()
 {
     let register = await user.register(form)
-    errors.value = user.message_error
 }
 </script>
