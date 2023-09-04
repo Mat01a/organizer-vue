@@ -1,7 +1,7 @@
 <template>
-    <div :class="{'overflow-hidden h-auto': editValue, 'min-h-screen': !editValue}" class="flex flex-col w-full bg-slate-500">
+    <div :class="{'overflow-hidden': editValue}" class="min-h-screen flex flex-col w-full bg-slate-500">
         <Navbar/>
-            <main :class="{'flex-1 max-w-5xl w-full mx-auto': editValue == false, 'overflow-hidden': editValue}">
+            <main :class="{'flex-1 max-w-5xl w-full mx-auto': editValue == false, 'overflow-hidden flex-1 max-w-5xl w-full mx-auto': editValue}">
                 <div class="w-full max-w-4xl mx-auto h-20 rounded-lg mt-4 drop-shadow-md" style="background-color: #7D91AD;">
                     <CreateProject/>
                 </div>
@@ -24,7 +24,7 @@
     </div>
     
     <!-- EDIT -->
-    <ProjectSettings :edit-value="editValue" @toggle-edit="receiveEmit(element)" :project-id="projectSettings.id" :project-name="projectSettings.name" @change-name="changeProjectName" />
+    <ProjectSettings :edit-value="editValue" @toggle-edit="receiveEmit(element)" :project-id="projectSettings.id" :project-name="projectSettings.name" @change-name="changeProjectName" :project-users="projectSettings.users" @add-user="addUser" />
 
 </template>
 
@@ -56,7 +56,7 @@ const projectSettings = ref({
     },
     name: {
         type: String
-    }
+    },
 })
 
 const userStore = useUserStore()
@@ -84,8 +84,15 @@ function receiveEmit(project)
         let currentProjectJSON = JSON.parse(JSON.stringify(project))
         projectSettings.value.name = currentProjectJSON.name
         projectSettings.value.id = currentProjectJSON.id
+        getUsers()
     }
     editValue.value = !editValue.value
+}
+
+
+function addUser(data)
+{
+    projectStore.addUser(data.id, data.username)
 }
 
 
@@ -101,15 +108,17 @@ function setTransform()
 
 function changeProjectName(data)
 {
+    console.log(data)
     projectStore.changeName(data.id, data.name).then(() => {
         projectSettings.value.name = data.name
     })
 }
 
-function getProjects()
+function getUsers()
 {
-    
+    projectStore.getCurrentProjectUsers(projectSettings.value.id)
 }
+
 </script>
 
 <style>
