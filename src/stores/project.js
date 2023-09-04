@@ -6,7 +6,9 @@ export const useProjectStore = defineStore('project', {
         return {
             projects: {
                 current: [],
-                completed: []
+                completed: [],
+                currentProposed: [],
+                currentProjectUsers: [],
             },
             message_errors: []
         }
@@ -20,6 +22,7 @@ export const useProjectStore = defineStore('project', {
             this.projects.completed = []
 
             data.data.forEach(element => {
+                console.log(data.data)
                 if(element[0].status == 0)
                     this.projects.current.push(element[0])
                 else
@@ -59,6 +62,57 @@ export const useProjectStore = defineStore('project', {
                 }
             })
         },
+        async searchUser(id, name)
+        {
+            await instance.get('api/projects/' + id + '/users/' + name)
+            .then((response) => {
+                this.projects.currentProposed = response.data
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+        async addUser(id, username)
+        {
+            await instance.post('api/project/addUser', {
+                'id': id,
+                'username': username
+            })
+            .then((response) => {
+                this.projects.currentProjectUsers[0].push({'name': response.data.name, 'username': response.data.username})
+            })
+            .catch((error) => {
+                this.projects.addUserError = error.response.data
+            })
+        },
+        async getCurrentProjectUsers(id)
+        {
+            await instance.get('api/project/' + id + '/users')
+            .then((response) => {
+                this.projects.currentProjectUsers = response.data
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+        async nextUsersPage(id)
+        {
+            await instance.get('api/project/' + id + '/users?page=' + (this.projects.currentProjectUsers[1].current_page + 1))
+            .then((response) => {
+                this.projects.currentProjectUsers = response.data
+            })
+        },
+        async previousUsersPage(id)
+        {
+            await instance.get('api/project/' + id + '/users?page=' + (this.projects.currentProjectUsers[1].current_page - 1))
+            .then((response) => {
+                this.projects.currentProjectUsers = response.data
+            })
+        },
+        deleteAddUserError()
+        {
+            delete this.projects.addUserError
+        }
     },
     getters: {
         countCurrentProjects() {
