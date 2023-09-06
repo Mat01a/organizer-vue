@@ -4,12 +4,9 @@ import instance from '../axios'
 export const useProjectStore = defineStore('project', {
     state: () => {
         return {
-            projects: {
-                current: [],
-                completed: [],
-                currentProposed: [],
-                currentProjectUsers: [],
-            },
+            projects: {},
+            proposedUsers: [],
+            currentProjectUsers: [],
             message_errors: []
         }
     },
@@ -18,15 +15,11 @@ export const useProjectStore = defineStore('project', {
             await instance.get('/sanctum/csrf-cookie')
             let data = await instance.get('/api/projects')
 
-            this.projects.current = []
-            this.projects.completed = []
+            this.projects = {}
 
             data.data.forEach(element => {
-                console.log(data.data)
-                if(element[0].status == 0)
-                    this.projects.current.push(element[0])
-                else
-                    this.projects.completed.push(element[0])
+                var current_id = element[0].id
+                this.projects[current_id] = element[0]
             })
                         
         },
@@ -66,7 +59,7 @@ export const useProjectStore = defineStore('project', {
         {
             await instance.get('api/projects/' + id + '/users/' + name)
             .then((response) => {
-                this.projects.currentProposed = response.data
+                this.proposedUsers = response.data
             })
             .catch((error) => {
                 console.log(error)
@@ -74,12 +67,12 @@ export const useProjectStore = defineStore('project', {
         },
         async addUser(id, username)
         {
-            await instance.post('api/project/addUser', {
+            await instance.post('api/projects/addUser', {
                 'id': id,
                 'username': username
             })
             .then((response) => {
-                this.projects.currentProjectUsers[0].push({'name': response.data.name, 'username': response.data.username})
+                this.currentProjectUsers[0].push({'name': response.data.name, 'username': response.data.username})
             })
             .catch((error) => {
                 this.projects.addUserError = error.response.data
@@ -87,9 +80,9 @@ export const useProjectStore = defineStore('project', {
         },
         async getCurrentProjectUsers(id)
         {
-            await instance.get('api/project/' + id + '/users')
+            await instance.get('api/projects/' + id + '/users')
             .then((response) => {
-                this.projects.currentProjectUsers = response.data
+                this.currentProjectUsers = response.data
             })
             .catch((error) => {
                 console.log(error)
@@ -97,16 +90,31 @@ export const useProjectStore = defineStore('project', {
         },
         async nextUsersPage(id)
         {
-            await instance.get('api/project/' + id + '/users?page=' + (this.projects.currentProjectUsers[1].current_page + 1))
+            await instance.get('api/projects/' + id + '/users?page=' + (this.currentProjectUsers[1].current_page + 1))
             .then((response) => {
-                this.projects.currentProjectUsers = response.data
+                this.currentProjectUsers = response.data
             })
         },
         async previousUsersPage(id)
         {
-            await instance.get('api/project/' + id + '/users?page=' + (this.projects.currentProjectUsers[1].current_page - 1))
+            await instance.get('api/projects/' + id + '/users?page=' + (this.currentProjectUsers[1].current_page - 1))
             .then((response) => {
-                this.projects.currentProjectUsers = response.data
+                this.currentProjectUsers = response.data
+            })
+        },
+        async changeProjectStatus(id, status)
+        {
+            let new_status = status == 0 ? 1 : 0
+            await instance.post('/api/projects/changeStatus', {
+                project_id: id,
+                status: new_status
+            })
+            .then((response) => {
+                if(response.status == 200)
+                {
+                    console.log(id)
+                    this.projects[id].status = new_status
+                }
             })
         },
         deleteAddUserError()
@@ -116,12 +124,24 @@ export const useProjectStore = defineStore('project', {
     },
     getters: {
         countCurrentProjects() {
-            let currentProjects = this.projects.current.length
-            return currentProjects
+            let currents = 0
+            for(const [key, value] of Object.entries(this.projects))
+            {
+                if(value.status == 0)
+                    currents++
+            }
+
+            return currents
         },
         countCompletedProjects() {
-            let completedProjects = this.projects.completed.length
-            return completedProjects
+            let completed = 0
+            for(const [key, value] of Object.entries(this.projects))
+            {
+                if(value.status == 1)
+                    completed++
+            }
+            
+            return completed
         }
     }
 })

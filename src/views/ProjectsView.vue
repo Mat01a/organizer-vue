@@ -6,25 +6,29 @@
                     <CreateProject/>
                 </div>
 
-                <!-- Created projects -->
-                <p v-if="projects.current > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Current projects</p>
+                <!-- Current projects -->
+                <p v-if="projectStore.countCurrentProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Current projects</p>
                 
                 <div class="pb-12">
-                    <div v-for="element in projectStore.projects.current">
-                        <ProjectTab :name="element.name" @toggle-edit="receiveEmit(element)"/>
+                    <div v-for="element in projectStore.projects">
+                        <ProjectTab v-if="element.status == 0" :name="element.name" @toggle-edit="receiveEmit(element)"/>
                     </div>
                 </div>
 
                 
                 <!-- Completed projects -->
-                <p v-if="projects.completed > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Completed projects</p>
-
+                <p v-if="projectStore.countCompletedProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Completed projects</p>
+                <div class="pb-12">
+                    <div v-for="element in projectStore.projects">
+                        <ProjectTab v-if="element.status == 1" :name="element.name" @toggle-edit="receiveEmit(element)"/>
+                    </div>
+                </div>
             </main>
         <Footer/>
     </div>
     
     <!-- EDIT -->
-    <ProjectSettings :edit-value="editValue" @toggle-edit="receiveEmit(element)" :project-id="projectSettings.id" :project-name="projectSettings.name" @change-name="changeProjectName" :project-users="projectSettings.users" @add-user="addUser" />
+    <ProjectSettings :edit-value="editValue" @toggle-edit="receiveEmit(element)" :project-id="projectSettings.id" :project-name="projectSettings.name" @change-name="changeProjectName" :project-users="projectSettings.users" @add-user="addUser" :project-status="projectSettings.status"/>
 
 </template>
 
@@ -40,14 +44,6 @@ import { useUserStore } from '../stores/user';
 import { useProjectStore } from '../stores/project';
 
 const userData = ref()
-const projects = ref({
-    current: {
-        type: Number
-    },
-    completed: {
-        type: Number
-    }
-})
 
 const editValue = ref(false)
 const projectSettings = ref({
@@ -57,16 +53,16 @@ const projectSettings = ref({
     name: {
         type: String
     },
+    status: {
+        type: Number
+    },
 })
 
 const userStore = useUserStore()
 const projectStore = useProjectStore()
 
 onMounted(() => {
-    projectStore.getProjects().then(() => {
-        projects.value.current = projectStore.countCurrentProjects
-        projects.value.completed = projectStore.countCompletedProjects
-    })
+    projectStore.getProjects()
 })
 
 onUpdated(() => {
@@ -84,6 +80,7 @@ function receiveEmit(project)
         let currentProjectJSON = JSON.parse(JSON.stringify(project))
         projectSettings.value.name = currentProjectJSON.name
         projectSettings.value.id = currentProjectJSON.id
+        projectSettings.value.status = currentProjectJSON.status
         getUsers()
     }
     editValue.value = !editValue.value
