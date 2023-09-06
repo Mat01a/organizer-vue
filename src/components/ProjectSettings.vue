@@ -63,9 +63,9 @@
                         </div>
                     <!-- USERS -->
                     <div class="col-span-12 poppins dark:text-slate-200 text-2xl max-h-96">Users</div>
-                    <div class="col-span-12 max-h-96 overflow-hidden">
+                    <div class="col-span-12 overflow-hidden">
                         <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-8" v-for="(user, value) in projects.projects.currentProjectUsers[0]">
+                            <div class="col-span-8" v-for="(user, value) in projects.currentProjectUsers[0]">
                                 <p class="py-2 px-4 mx-2 col-span-8 outline-none dark:bg-slate-500 text-slate-300 poppins text-xl rounded-md w-full">
 
                                     <div class="grid grid-cols-12">
@@ -74,18 +74,34 @@
                                             <p class="col-span-10 my-auto open-sans text-base">{{ user.username }}</p>
                                         </div>
                                         <div class="col-span-5 open-sans mx-auto my-auto">
-                                            {{ projects.projects.currentProjectUsers[1].data[value].name }}
+                                            {{ projects.currentProjectUsers[1].data[value].name }}
                                         </div>
                                     </div>
                                 </p>
                             </div>
                             <!-- PREVIOUSE PAGE -->
-                            <div class="col-span-2">
-                                <button v-if="projects.projects.currentProjectUsers[1].current_page > 1" class="w-full h-min py-1 dark:bg-slate-500 hover:dark:bg-yellow-400 hover:text-slate-800 text-slate-200 poppins text-xl z-30 opacity-100 rounded-md px-2" @click="previousPage()">Previous Page</button>
+                            <div v-if="projects.currentProjectUsers[1].current_page > 1" class="col-start-9 col-span-2">
+                                <button class="w-full h-min py-1 dark:bg-slate-500 hover:dark:bg-yellow-400 hover:text-slate-800 text-slate-200 poppins text-xl z-30 opacity-100 rounded-md px-2" @click="previousPage()">Previous Page</button>
                             </div>
                             <!-- NEXT PAGE -->
-                            <div v-if="projects.projects.currentProjectUsers[1].current_page < projects.projects.currentProjectUsers[1].last_page" class="col-span-2">
+                            <div v-if="projects.currentProjectUsers[1].current_page < projects.currentProjectUsers[1].last_page" class="col-start-11 col-span-2">
                                 <button class="w-full h-min py-1 dark:bg-slate-500 hover:dark:bg-yellow-400 hover:text-slate-800 text-slate-200 poppins text-xl z-30 opacity-100 rounded-md px-2" @click="nextPage()">Next Page</button>
+                            </div>
+                        </div>
+                        <div class="col-span-12">
+                            <div class="grid grid-cols-12 gap-4">
+                                <!-- PROJECT STATUS -->
+                                <div class="col-span-8 py-2 my-auto">
+                                    <div class="my-auto poppins dark:text-slate-200 text-2xl">
+                                        Project Status
+                                    </div>
+                                </div>
+                                <div class="col-start-11 col-span-2">
+                                    <div :class="{'bg-green-500': projects.projects[projectId].status == 1, 'bg-slate-500': projects.projects[projectId].status == 0}" class="transition-all .4s w-24 h-12 rounded-full py-2" @click="changeProjectStatus">
+                                        <div :class="{'ml-14': projects.projects[projectId].status == 1, 'ml-2': projects.projects[projectId].status == 0}" class="w-8 h-8 bg-slate-300 rounded-full transition-all .4s all">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +113,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useProjectStore } from '../stores/project';
 const projects = useProjectStore()
 
@@ -106,6 +122,7 @@ const props = defineProps({
     editValue: Boolean,
     projectId: Number,
     projectName: String,
+    projectStatus: Number,
 })
 
 
@@ -123,9 +140,11 @@ const projectSettings = ref({
     name: {
         type: String
     },
+    status: {
+        type: Number
+    },
 })
 const search = ref()
-const projectUsers = ref()
 
 // Event Listener for hidding proposed searchbar
 document.addEventListener('focusout', focusChanged)
@@ -147,6 +166,7 @@ function toggleEdit(mode)
 {
     emit('toggle-Edit')
     edit.value = mode
+    projectSettings.value.status = props.projectStatus
 }
 
 function editInputToggle()
@@ -163,7 +183,7 @@ function searchUser()
         showProposed.value = true
         projects.deleteAddUserError()
         projects.searchUser(props.projectId, search.value).then(() => {
-            currentProposed.value = projects.projects.currentProposed
+            currentProposed.value = projects.proposedUsers
         })
     }
     else
@@ -194,5 +214,10 @@ function nextPage()
 function previousPage()
 {
     projects.previousUsersPage(props.projectId)
+}
+
+function changeProjectStatus()
+{
+    projects.changeProjectStatus(props.projectId, projects.projects[props.projectId].status)
 }
 </script>
