@@ -11,7 +11,7 @@
                 
                 <div class="pb-12">
                     <div v-for="element in projectStore.projects">
-                        <ProjectTab v-if="element.status == 0" :name="element.name" @toggle-edit="receiveEmit(element)"/>
+                        <ProjectTab v-if="element.status == 0" :name="element.name" :status="element.status" @toggle-edit="receiveEmit(element)"/>
                     </div>
                 </div>
 
@@ -20,10 +20,12 @@
                 <p v-if="projectStore.countCompletedProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Completed projects</p>
                 <div class="pb-12">
                     <div v-for="element in projectStore.projects">
-                        <ProjectTab v-if="element.status == 1" :name="element.name" @toggle-edit="receiveEmit(element)"/>
+                        <ProjectTab v-if="element.status == 1" :name="element.name" :status="element.status" @toggle-edit="receiveEmit(element)" />
                     </div>
                 </div>
             </main>
+            <!-- LOADING ICON -->
+            <div v-if="projectStore.loading == true" class="absolute bottom-2 right-6 w-16 h-16 border-8 border-transparent m-4 border-t-green-500 animate-spin rounded-full z-40"></div>
         <Footer/>
     </div>
     
@@ -65,6 +67,7 @@ onMounted(() => {
     projectStore.getProjects()
 })
 
+
 onUpdated(() => {
     setTransform()
 })
@@ -90,6 +93,7 @@ function receiveEmit(project)
 function addUser(data)
 {
     projectStore.addUser(data.id, data.username)
+    getUsers()
 }
 
 
@@ -105,7 +109,6 @@ function setTransform()
 
 function changeProjectName(data)
 {
-    console.log(data)
     projectStore.changeName(data.id, data.name).then(() => {
         projectSettings.value.name = data.name
     })

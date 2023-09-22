@@ -63,7 +63,12 @@
                         
                         <div class="grid grid-cols-1 w-6/12 mx-auto gap-4">
                             <div class="col-span-1">
-                                <button class="bg-slate-400 hover:bg-slate-600  transition-all rounded-lg md:p-2 float-right w-full text-center">Register</button>
+                                <button :disabled="user.loading" class="dark:disabled:bg-slate-300 bg-slate-400 hover:bg-slate-600  transition-all rounded-lg md:p-2 float-right w-full text-center">
+                                    <div v-if="!user.loading">Register</div>
+                                    <div v-if="user.loading">
+                                        <div class="w-8 h-8 border-4 border-transparent mx-auto border-t-green-500 animate-spin rounded-full z-40"></div>
+                                    </div>
+                                </button>
                             </div>
                         </div>
                     </form>

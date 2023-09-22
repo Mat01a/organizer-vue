@@ -26,10 +26,11 @@ async function onSubmit()
 {
     await projectStore.createProject(form).then(() => {
         form_errors.value = null
+        form.value.name = null
     })
-    if(projectStore.message_errors.length > 0)
+    if(projectStore.messageErrors.length > 0)
     {
-        form_errors.value = projectStore.message_errors[0]
+        form_errors.value = projectStore.messageErrors[0]
     }
 }
 </script>

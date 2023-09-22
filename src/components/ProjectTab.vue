@@ -3,12 +3,16 @@
 
         <div class="grid grid-cols-12 w-full">
             <!-- Icon -->
-            <div class="col-span-2 h-20 float-left flex">
-                <div class="rounded-full bg-orange-300 w-10 h-10 m-auto inline"></div>
-            </div>
+            <RouterLink :to="{name: 'project'}" class="col-span-2 h-full">
+                <div class="h-20 w-full float-left flex">
+                    <div :class="{'bg-orange-300': status == 0, 'bg-green-500': status == 1}" class="rounded-full w-10 h-10 m-auto inline"></div>
+                </div>
+            </RouterLink>
 
             <!-- Name -->
-            <div class="block col-start-3 col-span-7 text-left text-lg my-auto poppins text-slate-100">{{ name }}</div>
+            <RouterLink :to="{name: 'project'}" class="block col-start-3 col-span-7 text-left text-lg my-auto poppins text-slate-100">
+                {{ name }}
+            </RouterLink>
 
             <!-- Buttons -->
             <SettingsButton :hovered="isHovered" @click="toggleEdit(true)"/>
@@ -19,15 +23,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import SettingsButton from './buttons/SettingsButton.vue';
 
-
+const props = defineProps({
+    status: {
+        type: Number
+    },
+    name: {
+        type: String
+    }
+})
 const edit = ref(false)
 var isHovered = ref(false)
-defineProps({
-    name: String
-})
 
 const emit = defineEmits(['toggle-Edit'])
 function toggleEdit(mode)

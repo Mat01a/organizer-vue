@@ -16,7 +16,8 @@ export const useUserStore = defineStore('user', {
             },
             login_message_error: {
                 email: null,
-            }
+            },
+            loading: false,
         }
     },
     actions: {
@@ -24,7 +25,11 @@ export const useUserStore = defineStore('user', {
 
         },
         async login(form) {
+            this.loading = true
             await instance.get('/sanctum/csrf-cookie')
+            .catch((error) => {
+                this.loading = false
+            })
             const login = await instance.post('/login', {
                 email: form.value.email,
                 password: form.value.password
@@ -33,14 +38,17 @@ export const useUserStore = defineStore('user', {
                 this.user = {
                     email: form.value.email
                 }
+                this.loading = false
                 router.push({name: 'projects'})
             })
             .catch((error) => {
+                this.loading = false
                 this.login_message_error = error.response.data.errors
             })
 
         },
         async register(form) {
+            this.loading = true
             await instance.get('/sanctum/csrf-cookie')
             const register = await instance.post('/register', {
                 name: form.value.name,
@@ -50,30 +58,31 @@ export const useUserStore = defineStore('user', {
                 password_confirmation: form.value.password_confirmation
             })
             .then((response) => {
+                this.loading = false
                 this.user = {
                     email: form.value.email
                 }
                 router.push({name: 'projects'})
             })
             .catch((error) => {
-
-
                 //Reset all errors
                 for(let item in this.register_message_error)
                 {
                     this.register_message_error[item] = null
                 }
-
+                
                 //Set all current errors
                 for(let item in error.response.data.errors)
                 {
                     this.register_message_error[item] = error.response.data.errors[item]
                 }
                 this.register_message_error = error.response.data.errors
+                this.loading = false
             })
         },
         async logout()
         {
+            this.loading = true
             const req = await instance.post("/logout")
             .then(() => {
                 const projects = useProjectStore()
@@ -82,6 +91,7 @@ export const useUserStore = defineStore('user', {
                 projects.projects.current = []
                 projects.projects.completed = []
                 sessionStorage.clear()
+                this.loading = false
             })
             return req
         }
