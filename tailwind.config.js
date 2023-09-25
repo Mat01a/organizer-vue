@@ -14,6 +14,7 @@ module.exports = {
         'custom-slate': {
           450: '#677C99',
           350: '#b6bcc5',
+          550: '#7D91AD',
         }
       },
 

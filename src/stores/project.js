@@ -22,16 +22,16 @@ export const useProjectStore = defineStore('project', {
         async getProjects() {
             this.loading = true
             await instance.get('/sanctum/csrf-cookie')
-            let data = await instance.get('/api/projects')
+            let request = await instance.get('/api/projects')
             this.projects = {}
             
-            if(data.data.data)
+            if(request.data.data)
             {
-                data.data.data.forEach(element => {
+                request.data.data.forEach(element => {
                     var current_id = element.id
                     this.projects[current_id] = element
                 })
-                this.projectsPages = data.data
+                this.projectsPages = request.data.data
                 this.loading = false
                 return true
             }
@@ -306,6 +306,10 @@ export const useProjectStore = defineStore('project', {
                 this.loading = false
                 return false
             })
+        },
+        async getTasks(id)
+        {
+            console.log(id)
         },
         deleteAddUserError()
         {

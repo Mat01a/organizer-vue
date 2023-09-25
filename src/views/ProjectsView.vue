@@ -11,7 +11,7 @@
                 
                 <div class="pb-12">
                     <div v-for="element in projectStore.projects">
-                        <ProjectTab v-if="element.status == 0" :name="element.name" :status="element.status" @toggle-edit="receiveEmit(element)"/>
+                        <ProjectTab v-if="element.status == 0" :id="element.id" :name="element.name" :status="element.status" @toggle-edit="receiveEmit(element)"/>
                     </div>
                 </div>
 

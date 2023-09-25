@@ -71,7 +71,6 @@ onMounted(() => {
 })
 onUpdated(() => {
     const user = useUserStore()
-    console.log(user.isLoggedIn)
     loggedIn.value = user.isLoggedIn
 })
 </script>

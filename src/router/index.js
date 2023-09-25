@@ -33,7 +33,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/project',
+      path: '/project/:id',
       name: 'project',
       component: ProjectView,
       meta: {
