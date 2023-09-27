@@ -20,12 +20,20 @@
                 <p v-if="projectStore.countCompletedProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Completed projects</p>
                 <div class="pb-12">
                     <div v-for="element in projectStore.projects">
-                        <ProjectTab v-if="element.status == 1" :name="element.name" :status="element.status" @toggle-edit="receiveEmit(element)" />
+                        <ProjectTab v-if="element.status == 1" :id="element.id" :name="element.name" :status="element.status" @toggle-edit="receiveEmit(element)" />
                     </div>
                 </div>
             </main>
             <!-- LOADING ICON -->
             <div v-if="projectStore.loading == true" class="absolute bottom-2 right-6 w-16 h-16 border-8 border-transparent m-4 border-t-green-500 animate-spin rounded-full z-40"></div>
+
+            <!-- ERROR TAB -->
+            <Transition name="fadeHeight" class="overflow-hidden">
+                <div v-if="projectStore.error == true" class="absolute bottom-2 right-6 bg-red-600 h-24 w-60 rounded-md poppins text-xl dark:text-gray-200 p-2 z-40">
+                    {{ projectStore.errorMessage }}
+                </div>
+            </Transition>
+
         <Footer/>
     </div>
     

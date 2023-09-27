@@ -133,10 +133,8 @@ import { useProjectStore } from '../stores/project';
 import EditButton from './buttons/EditButton.vue';
 import ProjectUserTab from './ProjectUserTab.vue'
 import PermissionsSettings from './PermissionsSettings.vue'
-import SettingsButton from './buttons/SettingsButton.vue';
 const projects = useProjectStore()
 
-const users = ref(projects.currentProjectUsers)
 const props = defineProps({
     editValue: Boolean,
     projectId: Number,
@@ -160,7 +158,6 @@ const projectSettings = ref({
         type: Number
     },
 })
-const changedPermission = ref()
 const search = ref()
 
 // Event Listener for hidding proposed searchbar
