@@ -14,6 +14,9 @@ export const useProjectStore = defineStore('project', {
             leaveErrors: null,
             addUserError: null,
             loading: false,
+            error: false,
+            errorMessage: null,
+            errorCooldown: null,
             showPermissions: false,
             editPermissions: false,
         }
@@ -47,6 +50,9 @@ export const useProjectStore = defineStore('project', {
             })
             .catch(error => {
                 this.messageErrors = error.response.data.errors.name
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
             })
         },
         async changeName(id, name)
@@ -56,16 +62,16 @@ export const useProjectStore = defineStore('project', {
                 'id': id,
                 'name': name
             }).then((response) => {
-                if (response.status == 200)
-                {
-                    // Update list
-                    this.projects[id].name = name
-                    this.loading = false
-                    return true
-                }
-            })
-            .catch(() => {
+                // Update list
+                this.projects[id].name = name
                 this.loading = false
+                return true
+            })
+            .catch((error) => {
+                this.loading = false
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 return false
             })
         },
@@ -80,20 +86,24 @@ export const useProjectStore = defineStore('project', {
             })
             .catch((error) => {
                 this.loading = false
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
             })
         },
         async addUser(id, username)
         {
-            await instance.post('api/projects/addUser', {
-                'id': id,
+            await instance.post('api/projects/add-user', {
+                'project_id': id,
                 'username': username
             })
             .then((response) => {
                 return true
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.addUserError = error.response.data
             })
         },
@@ -111,7 +121,9 @@ export const useProjectStore = defineStore('project', {
                 this.loading = false
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
@@ -124,7 +136,10 @@ export const useProjectStore = defineStore('project', {
                 this.pagesOfUsers = response.data
                 this.loading = false
             })
-            .catch(() => {
+            .catch((error) => {
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
@@ -137,15 +152,18 @@ export const useProjectStore = defineStore('project', {
                 this.pagesOfUsers = response.data
                 this.loading = false
             })
-            .catch(() => {
+            .catch((error) => {
                 this.loading = false
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
             })
         },
         async changeProjectStatus(id, status)
         {
             this.loading = true
             let new_status = status == 0 ? 1 : 0
-            await instance.post('/api/projects/changeStatus', {
+            await instance.post('/api/projects/change-status', {
                 project_id: id,
                 status: new_status
             })
@@ -157,7 +175,9 @@ export const useProjectStore = defineStore('project', {
                 }
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
@@ -174,7 +194,9 @@ export const useProjectStore = defineStore('project', {
             })
             .catch((error) => {
                 this.leaveErrors = error.response.data
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
@@ -187,14 +209,16 @@ export const useProjectStore = defineStore('project', {
                 this.loading = false
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
         async addNewPermissin(id, name)
         {
             this.loading = true
-            await instance.post('/api/projects/addPermission', {
+            await instance.post('/api/projects/add-permission', {
                 project_id: id,
                 name: name
             })
@@ -204,7 +228,9 @@ export const useProjectStore = defineStore('project', {
                 return true
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
@@ -217,7 +243,9 @@ export const useProjectStore = defineStore('project', {
                 this.loading = false
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
@@ -230,14 +258,17 @@ export const useProjectStore = defineStore('project', {
                 this.loading = false
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
         async changeUserPermission(project_id, user, permission_id)
         {
-            this.loading = false
-            await instance.post('/api/projects/updateUserPermission', {
+            this.hideError()
+            this.loading = true
+            await instance.patch('/api/projects/update-user-permission', {
                 project_id: project_id,
                 user: user,
                 permission_id: permission_id
@@ -247,16 +278,19 @@ export const useProjectStore = defineStore('project', {
                 return true
             })
             .catch((error) => {
-                console.log(error)
                 this.loading = false
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 return false
             })
         },
         async changePermission(permission_id, form, project_id)
         {
             this.loading = true
+            this.hideError()
             console.log(form.value)
-            await instance.post('api/projects/updatePermissionSettings', {
+            await instance.patch('api/projects/update-permission-settings', {
                 project_id: project_id,
                 permission_id: permission_id,
                 name: form.value.name,
@@ -271,14 +305,18 @@ export const useProjectStore = defineStore('project', {
             .then(() => {
                 this.loading = false
             })
-            .catch(() => {
+            .catch((error) => {
                 this.loading = false
+                this.error = true
+                console.log(error);
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
             })
         },
         async removePermission(project_id, permission_id)
         {
             this.loading = true
-            await instance.post('api/projects/removePermission',{
+            await instance.patch('api/projects/remove-permission',{
                 project_id: project_id,
                 permission_id: permission_id
             })
@@ -287,14 +325,16 @@ export const useProjectStore = defineStore('project', {
                 this.loading = false
             })
             .catch((error) => {
-                console.log(error)
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 this.loading = false
             })
         },
         async removeUserFromProject(project_id, username)
         {
             this.loading = true
-            await instance.post('api/projects/deleteUser', {
+            await instance.post('api/projects/delete-user', {
                 project_id: project_id,
                 username: username
             })
@@ -302,8 +342,11 @@ export const useProjectStore = defineStore('project', {
                 this.loading = false
                 return true
             })
-            .catch(() => {
+            .catch((error) => {
                 this.loading = false
+                this.error = true
+                this.errorMessage = error.response.data
+                setTimeout(this.hideError, 2000)
                 return false
             })
         },
@@ -318,6 +361,16 @@ export const useProjectStore = defineStore('project', {
         deleteLeaveErrors()
         {
             this.leaveErrors = null
+        },
+        hideError()
+        {
+            this.errorCooldown = Date.now()
+            const nextError = 500;
+            if(this.errorCooldown - nextError <= (Date.now()))
+            {
+                this.error = false
+                this.errorMessage = null
+            }
         }
     },
     getters: {
