@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full h-screen bg-slate-500">
+    <div class="flex flex-col w-full md:h-screen dark:bg-slate-500 bg-slate-100">
         <Navbar/>
 
         <main class="flex-1 max-w-5xl w-full mx-auto">
@@ -8,17 +8,17 @@
                 <div class="col-span-12 h-[97px]"></div>
 
                 <!-- TASKS CARD -->
-                <div class="col-span-5 h-[66vh] bg-custom-slate-550 rounded-md overflow-hidden max-h-[66vh] drop-shadow-lg">
+                <div class="md:col-span-5 col-span-10 col-start-2 md:col-start-1 h-[66vh] dark:bg-custom-slate-550 bg-white rounded-md overflow-hidden max-h-[66vh] drop-shadow-lg">
                     <div class="flex flex-col w-full h-full">
 
                         <!-- CARDS -->
                         <div class="w-full overflow-scroll hide-scroll" @scroll="customScroll">
 
                             <!-- TITLE -->
-                            <div class="w-full bg-green-500 poppins px-10 text-xl p-3 fixed z-40">Tasks</div>
+                            <div class="w-full bg-green-500 dark:text-slate-800 text-white poppins px-10 text-xl p-3 md:fixed rounded-t-md z-40">Tasks</div>
                             <!-- TASKS -->
-                            <div class="py-12">
-                                <div class="w-full my-4 px-8 drop-shadow-md" v-for="task in taskStore.tasks" :key="task.status" v-if="taskStore.tasks">
+                            <div class="md:py-12 sm:pb-12 sm:h-96 md:h-auto">
+                                <div class="w-full my-4 px-8 drop-shadow-md text-slate-700" v-for="task in taskStore.tasks" :key="task.status" v-if="taskStore.tasks">
                                     <TaskCard :task="task" @remove="remove"/>
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
 
                         <!-- ADD NEW TASK -->
                         <TransitionGroup name="fadeHeight">
-                            <div class="absolute bottom-0 w-full  bg-custom-slate-450 poppins dark:text-slate-200 px-8 text-xl py-4 transition-all" :class="{'hover:scale-105': !toggleForm}">
+                            <div class="md:absolute bottom-0 w-full  dark:bg-custom-slate-450 bg-slate-100 poppins dark:text-slate-200 px-8 text-xl py-4 transition-all" :class="{'hover:scale-105': !toggleForm}">
 
                             <!-- ICON -->
                             <div @click="showForm" class="cursor-pointer">
@@ -46,7 +46,7 @@
                 </div>
 
                 <!-- CHART -->
-                <div class="col-start-7 col-span-5 h-[45vh] p-4 bg-custom-slate-550 rounded-xl drop-shadow-lg">
+                <div class="md:col-start-7 md:col-span-5 col-span-10 col-start-2 my-8 h-[45vh] p-4 dark:bg-custom-slate-550 bg-white rounded-xl drop-shadow-lg">
                     <DoughnutChart :data="doughnutData"/>
                 </div>
 
@@ -58,7 +58,7 @@
 
             <!-- ERROR TAB -->
             <Transition name="fadeHeight" class="overflow-hidden">
-                <div v-if="taskStore.error == true" class="absolute bottom-2 right-6 bg-red-600 h-24 w-60 rounded-md poppins text-xl dark:text-gray-200 p-2">
+                <div v-if="taskStore.error == true" class="absolute bottom-2 right-6 bg-red-600 h-24 w-60 rounded-md poppins text-xl dark:text-gray-200 text-white p-2">
                     {{ taskStore.errorMessage }}
                 </div>
             </Transition>

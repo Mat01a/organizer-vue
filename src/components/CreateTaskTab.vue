@@ -1,15 +1,15 @@
 <template>
-    <div class="pl-2 pt-2 transition-all w-full">
+    <div class="pl-2 pt-2 transition-all w-full text-slate-700 dark:text-slate-200">
         <!-- INPUT NAME -->
         <form @submit.prevent="createTask">
             <label for="name" class="p-2">Name</label>
-            <div class="w-full rounded-md px-2 m-1 bg-custom-slate-550 shadow-md">
+            <div class="w-full rounded-md px-2 m-1 dark:bg-custom-slate-550 bg-white shadow-md">
                 <input type="text" id="name" class="border-0 bg-transparent w-full border-none outline-none my-1 text-base placeholder:text-custom-slate-350" placeholder="enter name here" v-model="form.name">
             </div>
 
             <!-- DESCRIPTION NAME -->
             <label for="description" class="p-2">Description</label>
-            <div class="w-full rounded-md transition-all px-2 m-1 bg-custom-slate-550 shadow-md">
+            <div class="w-full rounded-md transition-all px-2 m-1 dark:bg-custom-slate-550 bg-white shadow-md">
                 <textarea type="text" id="description" class="border-0 bg-transparent w-full border-none outline-none my-1 text-base placeholder:text-custom-slate-350 resize-none" placeholder="enter description here" v-model="form.description"/>
             </div>
             <button class="bg-green-500 p-2 m-2 rounded-md text-center inline-block">

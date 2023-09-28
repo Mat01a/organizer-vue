@@ -26,6 +26,7 @@ export const useUserStore = defineStore('user', {
         },
         async login(form) {
             this.loading = true
+            console.log(instance.baseurl)
             await instance.get('/sanctum/csrf-cookie')
             .catch((error) => {
                 this.loading = false
@@ -44,6 +45,7 @@ export const useUserStore = defineStore('user', {
             .catch((error) => {
                 this.loading = false
                 this.login_message_error = error.response.data.errors
+                console.log(error)
             })
 
         },

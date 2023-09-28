@@ -1,13 +1,13 @@
 <template>
-    <div :class="{'overflow-hidden': editValue}" class="min-h-screen flex flex-col w-full bg-slate-500">
+    <div :class="{'overflow-hidden': editValue}" class="min-h-screen flex flex-col w-full dark:bg-slate-500 bg-slate-100">
         <Navbar/>
-            <main :class="{'flex-1 max-w-5xl w-full mx-auto': editValue == false, 'overflow-hidden flex-1 max-w-5xl w-full mx-auto': editValue}">
-                <div class="w-full max-w-4xl mx-auto h-20 rounded-lg mt-4 drop-shadow-md" style="background-color: #7D91AD;">
+            <main :class="{'flex-1 max-w-5xl md:w-full mx-auto': editValue == false, 'overflow-hidden flex-1 max-w-5xl w-full mx-auto': editValue}">
+                <div class="w-full max-w-4xl mx-auto h-20 rounded-lg mt-4 drop-shadow-md dark:bg-custom-slate-550 bg-slate-200">
                     <CreateProject/>
                 </div>
 
                 <!-- Current projects -->
-                <p v-if="projectStore.countCurrentProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Current projects</p>
+                <p v-if="projectStore.countCurrentProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200 text-slate-700">Current projects</p>
                 
                 <div class="pb-12">
                     <div v-for="element in projectStore.projects">
@@ -17,7 +17,7 @@
 
                 
                 <!-- Completed projects -->
-                <p v-if="projectStore.countCompletedProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200">Completed projects</p>
+                <p v-if="projectStore.countCompletedProjects > 0" class="mx-auto max-w-4xl py-4 poppins dark:text-slate-200 text-slate-700">Completed projects</p>
                 <div class="pb-12">
                     <div v-for="element in projectStore.projects">
                         <ProjectTab v-if="element.status == 1" :id="element.id" :name="element.name" :status="element.status" @toggle-edit="receiveEmit(element)" />
@@ -29,16 +29,17 @@
 
             <!-- ERROR TAB -->
             <Transition name="fadeHeight" class="overflow-hidden">
-                <div v-if="projectStore.error == true" class="absolute bottom-2 right-6 bg-red-600 h-24 w-60 rounded-md poppins text-xl dark:text-gray-200 p-2 z-40">
+                <div v-if="projectStore.error == true" class="absolute bottom-2 right-6 bg-red-600 h-24 w-60 rounded-md poppins text-xl dark:text-gray-200 text-white p-2 z-40">
                     {{ projectStore.errorMessage }}
                 </div>
             </Transition>
 
+                
+            <!-- EDIT -->
+            <ProjectSettings :edit-value="editValue" @toggle-edit="receiveEmit(element)" :project-id="projectSettings.id" :project-name="projectSettings.name" @change-name="changeProjectName" :project-users="projectSettings.users" @add-user="addUser" :project-status="projectSettings.status"/>
         <Footer/>
     </div>
-    
-    <!-- EDIT -->
-    <ProjectSettings :edit-value="editValue" @toggle-edit="receiveEmit(element)" :project-id="projectSettings.id" :project-name="projectSettings.name" @change-name="changeProjectName" :project-users="projectSettings.users" @add-user="addUser" :project-status="projectSettings.status"/>
+
 
 </template>
 
