@@ -1,29 +1,29 @@
 <template>
         <div class="grid grid-cols-12 gap-2">
-            <div class="col-span-10">
-                <p class="py-2 px-4 outline-none dark:bg-slate-500 text-slate-300 poppins text-base rounded-md w-full">
+            <div class="md:col-span-10 col-span-12 p-2 md:p-0">
+                <p class="py-2 px-4 outline-none dark:bg-slate-500 bg-white dark:text-slate-300 text-slate-700 poppins text-base rounded-md w-full">
                     <form @submit.prevent="changePermission()">
-                        <div class="md:grid md:grid-cols-8 break-words">
+                        <div class="grid md:grid-cols-8 grid-cols-12 break-words">
 
-                            <div v-if="!edit" class="md:col-span-1 md:w-24 my-auto">
+                            <div v-if="!edit" class="md:col-span-1 col-span-12 md:w-24 my-auto">
                                 {{ name }}
                             </div>
-                            <input v-if="edit" class="outline-none dark:bg-slate-500 border-b-[1px]" type="text" v-model="form.name"/>
-                            <Checkmark :edit="edit" :checked="read" :text="read" @toggled="changeFormRead" />
-                            <Checkmark :edit="edit" :checked="write" :text="write" @toggled="changeFormWrite" />
-                            <Checkmark :edit="edit" :checked="updateName" :text="updateName" @toggled="changeFormUpdateName" />
-                            <Checkmark :edit="edit" :checked="addUsers" :text="addUsers" @toggled="changeFormAddUsers" />
-                            <Checkmark :edit="edit" :checked="removeUsers" :text="removeUsers" @toggled="changeFormRemoveUsers"/>
-                            <Checkmark :edit="edit" :checked="updateStatus" :text="updateStatus" @toggled="changeFormUpdateStatus"/>
-                            <Checkmark :edit="edit" :checked="updatePermissions" :text="updatePermissions" @toggled="changeFormUpdatePermissions"/>
+                            <input v-if="edit" class="col-span-12 md:col-span-1 outline-none dark:bg-slate-500 border-b-[1px]" type="text" v-model="form.name"/>
+                            <Checkmark :edit="edit" :checked="read" text="read" @toggled="changeFormRead" />
+                            <Checkmark :edit="edit" :checked="write" text="write" @toggled="changeFormWrite" />
+                            <Checkmark :edit="edit" :checked="updateName" text="change name" @toggled="changeFormUpdateName" />
+                            <Checkmark :edit="edit" :checked="addUsers" text="add users" @toggled="changeFormAddUsers" />
+                            <Checkmark :edit="edit" :checked="removeUsers" text="remove users" @toggled="changeFormRemoveUsers"/>
+                            <Checkmark :edit="edit" :checked="updateStatus" text="change status" @toggled="changeFormUpdateStatus"/>
+                            <Checkmark :edit="edit" :checked="updatePermissions" text="change permissions" @toggled="changeFormUpdatePermissions"/>
                         </div>
                     </form>
                 </p>
             </div>
-        <EditButton v-if="!edit" text="Edit" @click="changeEdit" size="col-span-1"/>
-        <EditButton v-if="!edit" text="X" color="bg-red-500" size="col-span-1" position="col-start-12" @click="emitRemovePermission"/>
-        <EditButton v-if="edit" text="Save" color="bg-green-500" size="col-span-1" @click="changePermission"/>
-        <EditButton v-if="edit" text="X" color="bg-red-500" size="col-span-1" position="col-start-12" @click="changeEdit"/>
+        <EditButton v-if="!edit" text="Edit" @click="changeEdit" position="md:col-start-11" size="md:col-span-1 col-span-6" additional="py-2 mx-2 md:mx-0 md:p-0"/>
+        <EditButton v-if="!edit" text="X" color="bg-red-500" position="md:col-start-12 col-start-7" size="md:col-span-1 col-span-6" additional="py-2 mx-2 md:mx-0 md:p-0" @click="emitRemovePermission"/>
+        <EditButton v-if="edit" text="Save" color="bg-green-500" position="md:col-start-11" size="md:col-span-1 col-span-6" additional="py-2 mx-2 md:mx-0 md:p-0" @click="changePermission"/>
+        <EditButton v-if="edit" text="X" color="bg-red-500" position="md:col-start-12 col-start-7" size="md:col-span-1 col-span-6" additional="py-2 mx-2 md:mx-0 md:p-0" @click="changeEdit"/>
         </div>
 </template>
 

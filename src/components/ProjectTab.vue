@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full max-w-4xl mx-auto h-20 rounded-lg mt-4 drop-shadow-md" style="background-color: #7D91AD;">
+    <div class="w-full max-w-4xl mx-auto h-20 rounded-lg mt-4 drop-shadow-md dark:bg-custom-slate-550 bg-slate-200">
 
         <div class="grid grid-cols-12 w-full">
             <!-- Icon -->
@@ -10,12 +10,12 @@
             </RouterLink>
 
             <!-- Name -->
-            <RouterLink v-if="props.id" :to="'project/' + props.id" class="block col-start-3 col-span-7 text-left text-lg my-auto poppins text-slate-100">
+            <RouterLink v-if="props.id" :to="'project/' + props.id" class="block col-start-3 col-span-7 text-left text-lg my-auto poppins dark:text-slate-100 text-slate-700">
                 {{ name }}
             </RouterLink>
 
             <!-- Buttons -->
-            <SettingsButton :hovered="isHovered" @click="toggleEdit(true)"/>
+            <SettingsButton @click="toggleEdit(true)"/>
 
         </div>
     </div>

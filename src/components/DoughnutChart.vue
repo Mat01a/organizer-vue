@@ -22,7 +22,7 @@ onMounted(() => {
         labels: ['Completed', 'Not Completed'],
         data: [],
         borderWidth: 0,
-        backgroundColor: ['#22C55E', '#FFFFFF'],
+        backgroundColor: ['#22C55E', '#f1f5f9'],
         }]
     },
     options: {

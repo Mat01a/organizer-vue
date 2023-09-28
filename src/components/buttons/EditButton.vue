@@ -7,7 +7,7 @@ const props = defineProps({
     text: String,
     color: {
         type: String,
-        default: 'dark:bg-slate-500'
+        default: 'dark:bg-slate-500 bg-slate-400'
     },
     hoverColor: {
         type: String,
