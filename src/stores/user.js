@@ -26,7 +26,6 @@ export const useUserStore = defineStore('user', {
         },
         async login(form) {
             this.loading = true
-            console.log(instance.baseurl)
             await instance.get('/sanctum/csrf-cookie')
             .catch((error) => {
                 this.loading = false
@@ -88,7 +87,6 @@ export const useUserStore = defineStore('user', {
             const req = await instance.post("/logout")
             .then(() => {
                 const projects = useProjectStore()
-                console.log("LOGOUT")
                 this.user = null
                 projects.projects.current = []
                 projects.projects.completed = []

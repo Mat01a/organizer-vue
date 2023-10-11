@@ -69,7 +69,7 @@
                                 <p class="py-2 px-4 mx-2 col-span-8 outline-none dark:bg-slate-500 bg-white dark:text-slate-300 text-slate-700 poppins text-xl rounded-md w-full">
 
                                     <div class="grid grid-cols-12">
-                                        <ProjectUserTab :user="user" :project-id="projectId" @change-user-permissions="changeUserPermissions"/>
+                                        <ProjectUserSettings :user="user" :project-id="projectId" @change-user-permissions="changeUserPermissions"/>
                                     </div>
                                 </p>
                             </div>
@@ -125,19 +125,14 @@
 </template>
 
 <script setup>
-import { onBeforeUpdate, onUpdated, ref } from 'vue'
-import { useProjectStore } from '../stores/project';
-import EditButton from './buttons/EditButton.vue';
-import ProjectUserTab from './ProjectUserTab.vue'
-import PermissionsSettings from './PermissionsSettings.vue'
+import { ref } from 'vue'
+import { useProjectStore } from '@/stores/project';
+import EditButton from '@/components/buttons/EditButton.vue';
+import ProjectUserSettings from './ProjectUserSettings.vue'
+import PermissionsSettings from '@/components/PermissionsSettings.vue'
 const projects = useProjectStore()
 
-const props = defineProps({
-    editValue: Boolean,
-    projectId: Number,
-    projectName: String,
-    projectStatus: Number,
-})
+const props = defineProps(['editValue', 'projectId', 'projectName', 'projectStatus'])
 const emit = defineEmits(['toggle-Edit', 'change-name', 'add-user'])
 
 const editName = ref(false)
@@ -217,7 +212,11 @@ function chooseProposedUser(user)
 
 function focusChanged(event)
 {
-    if(event.explicitOriginalTarget.dataset.focus != 'searchUser')
+    let element = event.explicitOriginalTarget.dataset
+    if(!element)
+        return
+    
+    if(element.focus != 'searchUser' && element.focus !== "undefined")
     {
         showProposed.value = false
     }
@@ -269,7 +268,6 @@ function changeUserPermissions(permission_id, project_id, user)
     projects.changeUserPermission(project_id, user, permission_id)
     .then(() => {
         projects.getCurrentProjectUsers(props.projectId).then(() => {
-            console.log(projects.currentProjectUsers)
         })
     })
 }

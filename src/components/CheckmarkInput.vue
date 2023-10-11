@@ -11,6 +11,7 @@
 import { ref, onUpdated } from 'vue'
 const props = defineProps(['checked', 'text', 'edit', 'change'])
 const checkedInput = ref(props.checked)
+const emits = defineEmits(['toggled'])
 onUpdated(() => {
     checkedInput.value = checkedInput == props.checked ? checkedInput.value: props.checked  
 })

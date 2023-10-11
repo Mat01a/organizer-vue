@@ -44,9 +44,9 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import SettingsButton from './buttons/SettingsButton.vue';
-import EditButton from './buttons/EditButton.vue';
-import { useProjectStore } from '../stores/project';
+import SettingsButton from '@/components/buttons/SettingsButton.vue';
+import EditButton from '@/components/buttons/EditButton.vue';
+import { useProjectStore } from '@/stores/project';
 
 const props = defineProps(['user', 'projectId'])
 const emit = defineEmits(['changeUserPermissions'])

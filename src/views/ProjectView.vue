@@ -39,7 +39,7 @@
                                     Create new Task
                                 </div>
                             </div>
-                                <CreateTaskTab v-if="toggleForm" @create-task="create"/>
+                                <TaskForm v-if="toggleForm" @create-task="create"/>
                             </div>
                         </TransitionGroup>
                     </div>
@@ -72,11 +72,11 @@
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
 import TaskCard from '../components/TaskCard.vue'
-import CreateTaskTab from '../components/CreateTaskTab.vue'
+import TaskForm from '../components/TaskForm.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTaskStore } from '../stores/tasks'
-import DoughnutChart from '../components/DoughnutChart.vue'
+import DoughnutChart from '../components/Charts/DoughnutChart.vue'
 
 const route = useRoute()
 const taskStore = useTaskStore()

@@ -35,7 +35,6 @@ else
 }
 
 function changeTheme() {
-    console.log(theme)
     if(localStorage.theme == 'dark')
     {
         localStorage.setItem('theme', 'light')

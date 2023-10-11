@@ -43,7 +43,7 @@
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12" v-for="(permission, id) in projects.currentProjectPermissions.data">
                         <!-- PERMISSION -->
-                        <PermissionTab :id="id" :permission-id="permission.id" :name="permission.name" :read="permission.read" :write="permission.write" :update-name="permission.updateName" :add-users="permission.addUsers" :remove-users="permission.removeUsers" :update-status="permission.updateStatus" :update-permissions="permission.updatePermissions" @remove-permission="removePermission" @change-permissions="emitChangePermissions"/>
+                        <PermissionForm :id="id" :permission-id="permission.id" :name="permission.name" :read="permission.read" :write="permission.write" :update-name="permission.updateName" :add-users="permission.addUsers" :remove-users="permission.removeUsers" :update-status="permission.updateStatus" :update-permissions="permission.updatePermissions" @remove-permission="removePermission" @change-permissions="emitChangePermissions"/>
                     </div>
 
                     <!-- PREVIOUS PAGE -->
@@ -62,7 +62,7 @@
 import { ref } from 'vue';
 import { useProjectStore } from '../stores/project';
 import BackButton from './buttons/BackButton.vue';
-import PermissionTab from './PermissionTab.vue';
+import PermissionForm from './PermissionForm.vue';
 import EditButton from './buttons/EditButton.vue';
 
 const emit = defineEmits(['toggleEdit', 'changePermissions'])
