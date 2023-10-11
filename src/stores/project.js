@@ -112,7 +112,6 @@ export const useProjectStore = defineStore('project', {
             this.loading = true
             await instance.get('api/projects/' + id + '/users')
             .then((response) => {
-                console.log(response)
                 this.currentProjectUsers = response.data.data
                 this.pagesOfUsers = {
                     current_page: response.data.current_page,
@@ -289,7 +288,6 @@ export const useProjectStore = defineStore('project', {
         {
             this.loading = true
             this.hideError()
-            console.log(form.value)
             await instance.patch('api/projects/update-permission-settings', {
                 project_id: project_id,
                 permission_id: permission_id,
@@ -350,10 +348,7 @@ export const useProjectStore = defineStore('project', {
                 return false
             })
         },
-        async getTasks(id)
-        {
-            console.log(id)
-        },
+
         deleteAddUserError()
         {
             this.addUserError = null

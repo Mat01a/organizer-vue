@@ -1,5 +1,5 @@
 <template>
-    <button v-if="!editName" :class="[color, hoverColor, position, additional, size]" class=" hover:text-slate-800 text-slate-200 poppins text-xl z-30 opacity-100 rounded-md h-full my-auto">{{ text }}</button>
+    <button :class="[color, hoverColor, position, additional, size]" class=" hover:text-slate-800 text-slate-200 poppins text-xl z-30 opacity-100 rounded-md h-full my-auto">{{ text }}</button>
 </template>
 
 <script setup>

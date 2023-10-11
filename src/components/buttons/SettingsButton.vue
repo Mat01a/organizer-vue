@@ -15,5 +15,4 @@ const props = defineProps({
         default: 'dark:bg-slate-500 bg-slate-300'
     }
 })
-console.log(props.background)
 </script>

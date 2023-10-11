@@ -7,7 +7,7 @@
 <script setup>
 import Chart from 'chart.js/auto';
 import { onMounted, onUpdated, ref, watch } from 'vue';
-import { useTaskStore } from '../stores/tasks';
+import { useTaskStore } from '../../stores/tasks';
 
 const props = defineProps(['data'])
 const taskStore = useTaskStore()

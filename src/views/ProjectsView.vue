@@ -3,7 +3,7 @@
         <Navbar/>
             <main :class="{'flex-1 max-w-5xl md:w-full mx-auto': editValue == false, 'overflow-hidden flex-1 max-w-5xl w-full mx-auto': editValue}">
                 <div class="w-full max-w-4xl mx-auto h-20 rounded-lg mt-4 drop-shadow-md dark:bg-custom-slate-550 bg-slate-200">
-                    <CreateProject/>
+                    <ProjectForm/>
                 </div>
 
                 <!-- Current projects -->
@@ -47,8 +47,8 @@
 import Footer from '../components/Footer.vue' 
 import Navbar from '../components/Navbar.vue';
 import ProjectTab from '../components/ProjectTab.vue';
-import CreateProject from '../components/CreateProject.vue';
-import ProjectSettings from '../components/ProjectSettings.vue'
+import ProjectForm from '../components/ProjectForm.vue';
+import ProjectSettings from './partials/projects/ProjectSettings.vue'
 import instance from '../axios'
 import { onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
 import { useUserStore } from '../stores/user';
