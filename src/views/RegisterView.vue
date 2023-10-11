@@ -63,10 +63,10 @@
                         
                         <div class="grid grid-cols-1 w-6/12 mx-auto gap-4">
                             <div class="col-span-1">
-                                <button :disabled="user.loading" class="dark:disabled:bg-slate-300 dark:bg-slate-400 bg-slate-300 hover:bg-slate-600  transition-all rounded-lg md:p-2 p-3 float-right w-full text-center">
+                                <button :disabled="user.loading" class="dark:disabled:bg-slate-300 disabled:bg-slate-200 dark:bg-slate-400 bg-slate-300 hover:bg-slate-600  transition-all rounded-lg md:p-2 p-3 float-right w-full text-center">
                                     <div v-if="!user.loading">Register</div>
                                     <div v-if="user.loading">
-                                        <div class="w-8 h-8 border-4 border-transparent mx-auto border-t-green-500 animate-spin rounded-full z-40"></div>
+                                        <div class="w-8 h-8 border-4 border-transparent mx-auto dark:border-t-green-500 border-t-slate-300 animate-spin rounded-full z-40"></div>
                                     </div>
                                 </button>
                             </div>
