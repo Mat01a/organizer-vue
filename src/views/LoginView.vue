@@ -26,10 +26,10 @@
                     
                     <div class="grid grid-cols-2 w-10/12 mx-auto gap-4">
                         <div class="col-span-1">
-                            <button :disabled="user.loading" class="h-12 dark:disabled:bg-gray-300 bg-green-500 hover:bg-yellow-400 transition-all hover:text-slate-100 text-white dark:text-slate-700 rounded-lg md:p-2 float-left w-full">
+                            <button :disabled="user.loading" class="h-12 dark:disabled:bg-gray-300 disabled:bg-slate-200 bg-green-500 hover:bg-yellow-400 transition-all hover:text-slate-100 text-white dark:text-slate-700 rounded-lg md:p-2 float-left w-full">
                             <div v-if="!user.loading">Login</div>
                             <div v-if="user.loading">
-                                <div class="w-8 h-8 border-4 border-transparent mx-auto border-t-green-500 animate-spin rounded-full z-40"></div>
+                                <div class="w-8 h-8 border-4 border-transparent mx-auto dark:border-t-green-500 border-t-slate-300 animate-spin rounded-full z-40"></div>
                             </div>
                             </button>
                         </div>
