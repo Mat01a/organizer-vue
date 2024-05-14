@@ -76,7 +76,7 @@ import TaskForm from '../components/TaskForm.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useTaskStore } from '../stores/tasks'
-import DoughnutChart from '../components/Charts/DoughnutChart.vue'
+import DoughnutChart from '../components/charts/DoughnutChart.vue'
 
 const route = useRoute()
 const taskStore = useTaskStore()
