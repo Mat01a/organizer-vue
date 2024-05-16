@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-full mx-auto text-center py-4 text-green-500">
         <form @submit.prevent="onSubmit">
-            <input type="text" v-model="form.name" class="bg-inherit text-slate-200 outline-none open-sans" placeholder="Create a new project">
+            <input type="text" v-model="form.name" class="bg-inherit text-slate-200 outline-none open-sans placeholder-slate-300" placeholder="Create a new project">
         </form>
         <div class="w-11/12 my-2 mx-auto h-1 bg-green-500">
             <div class="py-1 text-red-400">
