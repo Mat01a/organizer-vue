@@ -58,8 +58,7 @@ export const useProjectStore = defineStore('project', {
         async changeName(id, name)
         {
             this.loading = true
-            await instance.patch('/api/projects', {
-                'id': id,
+            await instance.patch('/api/projects/'+id, {
                 'name': name
             }).then((response) => {
                 // Update list
@@ -314,7 +313,7 @@ export const useProjectStore = defineStore('project', {
         async removePermission(project_id, permission_id)
         {
             this.loading = true
-            await instance.patch('api/projects/remove-permission',{
+            await instance.patch('api/projects/'+project_id+'/remove-permission',{
                 project_id: project_id,
                 permission_id: permission_id
             })
