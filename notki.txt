@@ -1,0 +1,15 @@
+- Dobrze podzielone dependencje
+- Dobrze zbudowane api i routing
+- Mogłoby się coś więcej dziać (unikalne projekty są w cenie, spróbuj np. zrobić cookie clickera, apkę do tworzenia muzyki z jakichś presetów, etc.)
+- Nie znam się na Vue (a na FE mało), ale struktura katalogów wygląda całkiem OK, nie jest przekombinowana
+- Routing i guardy fajnie porobione (nie wiem czy to presety, czy sam robiłeś)
+- Staraj się nie wykorzystywać await/then. Albo awaitujesz i kod "czeka" na odpowiedź, albo thenujesz i kod wykonuje ci metodę po otrzymaniu odpowiedzi
+- fajnie zbudowane cssy, spoko podzielone + tailwind
+ - Możnaby zbudować coś większego z tego, aby pokazać jak budujesz również strukturę cssów 
+- Brakuje jakiegoś readme.md, aby trochę opisać projekt, opowiedzieć jak działa, jak go zbootsrapować etc.
+- Spróbuj zakonteneryzować tę apkę (Docker + Dockerfile)
+- Spróbuj napisać jakieś testy do project.js (jest/mocha) i je wykorzystać w praktyce
+- Jak już się nauczysz testów możesz też spróbować sobie 
+    zautomatyzować pipeline pod pull request aby za każdym razem jak 
+    otwierasz PR odpalał ci automatycznie testy i sprawdzał czy wszystko jest git
+- Spróbuj podpiąć typescripta. Coraz mniej projektów jest pisanych natywnei w JS
