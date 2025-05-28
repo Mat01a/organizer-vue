@@ -9,7 +9,7 @@
         </div>
 
         <!-- DATE -->
-        <div class="py-[2px] px-2 w-min m-2 rounded-md open-sans dark:text-slate-700 float-left md:text-base text-sm" :class="{'bg-yellow-500': !task.status, 'bg-green-500': task.status}">
+        <div class="whitespace-nowrap py-[2px] px-2 w-min m-2 rounded-md open-sans dark:text-slate-700 float-left md:text-base text-sm" :class="{'bg-yellow-500': !task.status, 'bg-green-500': task.status}">
             <div>
                     {{ task.created }}
             </div>

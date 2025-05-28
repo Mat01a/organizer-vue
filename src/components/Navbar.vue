@@ -27,7 +27,7 @@
                 <div v-if="loggedIn" class="md:col-start-11 col-start-3">
                     <div class="grid w-full h-full content-center">
                         <div @click="menuToggle = !menuToggle" class="bg-green-500 w-10 h-10 rounded-full mx-auto hover:bg-yellow-400 cursor-pointer">
-                            <div v-if="menuToggle" class="absolute w-30 h-min p-1 dark:bg-slate-600 bg-white z-30 top-14 rounded-md -mx-8">
+                            <div v-if="menuToggle" class="absolute w-30 h-min p-2 dark:bg-slate-600 bg-white z-30 top-14 rounded-md -mx-8">
                             <RouterLink :to="{name: 'projects'}">
                                 <p class="p-1 m-1 rounded-md hover:dark:bg-slate-500 hover:bg-slate-200 text-slate-400 font-bold text-center">
                                         <IconProjects/>
